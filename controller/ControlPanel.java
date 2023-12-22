@@ -99,12 +99,12 @@ public class ControlPanel {
             String key = obat.getKey();
             Obat tObat = obat.getValue();
             if (tObat.getStok() > 0) {
-                System.out.println("Kode Obat \t :" + key);
-                System.out.println("Nama \t\t :" + tObat.getNamaObat());
-                System.out.println("Harga \t\t :" + tObat.getHargaObat());
+                System.out.println("Kode Obat \t : " + key);
+                System.out.println("Nama \t\t : " + tObat.getNamaObat());
+                System.out.println("Harga \t\t : " + tObat.getHargaObat());
                 System.out.println();
             } else {
-                System.out.println("Obat " + tObat.getNamaObat() + "Tidak Tersedia");
+                System.out.println("Obat " + tObat.getNamaObat() + " Tidak Tersedia.");
             }
             System.out.println(" ");
         }
@@ -123,12 +123,12 @@ public class ControlPanel {
             System.out.println("                                           ");
             System.out.println("Sebelum Masuk Silahkan Lengkapi");
             System.out.println("Data diri berikut ");
-            System.out.print("Nama \t:");
+            System.out.print("Nama \t: ");
             String namaUser = input.readLine();
-            System.out.print("Email \t:");
+            System.out.print("Email \t: ");
             String emailUser = input.readLine();
             System.out.println("===========================================");
-            System.out.print("Submit Y/N?\t:");
+            System.out.print("Submit Y/N?\t: ");
             masuk = input.readLine();
 
             if(masuk.equalsIgnoreCase("Y")){
@@ -187,21 +187,18 @@ public class ControlPanel {
                 String namaResponden = input.readLine();
                 System.out.print("Usia \t \t :");
                 int usiaResponden = Integer.valueOf(input.readLine());       
-                System.out.print("Suhu \t \t :");
+                System.out.print("Suhu Tubuh \t \t :");
                 int suhuResponden = Integer.valueOf(input.readLine());
-                System.out.print("Berat Badan \t :");
-                int beratResponden = Integer.valueOf(input.readLine());
                 System.out.print("Submit Y/N ?");
                 lanjutt = input.readLine();
 
                 
-            if(lanjutt == "Y"){
+            if(lanjutt.equalsIgnoreCase("Y")){
                 responden.setNama(namaResponden);
                 responden.setUsia(usiaResponden);
                 responden.setSuhu(suhuResponden);
-                responden.setBeratBadan(beratResponden);
                 }    
-            }while(lanjutt == "Y");
+            }while(!lanjutt.equalsIgnoreCase("Y"));
 
             System.out.println(" ");
             System.out.println("Jawab Pertanyaan-pertanyaan Berikut Dengan Ya/Tidak.");
@@ -214,10 +211,13 @@ public class ControlPanel {
                     System.out.println(tSoal.getPertanyaan());
                     System.out.print("Jawab : ");
                     jawab = input.readLine();
-
+                    if(jawab.equalsIgnoreCase("ya")||jawab.equalsIgnoreCase("tidak")){
                     answer.put(key, jawab);
-                }while(jawab.equalsIgnoreCase("ya")||jawab.equalsIgnoreCase("tidak"));
+                    }
+                }while(!jawab.equalsIgnoreCase("ya")&&!jawab.equalsIgnoreCase("tidak"));
+
             }        
+            recommendasiObat(responden);
         }
     }
 
@@ -226,25 +226,80 @@ public class ControlPanel {
         System.out.println(jawab.getKey()+" : "+ jawab.getValue());
     }
     }
-    public void recommendasiObat(HashMap<String, String> jawaban){
-            boolean pilek = jawaban.get("03").equalsIgnoreCase("ya"); // Contoh: Pertanyaan "Apakah Tenggorokan Anda Gatal ?"
-            boolean batuk = jawaban.get("05").equalsIgnoreCase("ya"); // Contoh: Pertanyaan "Anda Sedang Batuk ?"
-            boolean demam = jawaban.get("02").equalsIgnoreCase("ya");
-            boolean maag = jawaban.get("06").equalsIgnoreCase("ya");
+    public void recommendasiObat(Pembeli responden){
+        // Get data dari var responden
+        String namaRes = responden.getNama(); 
+        int suhu = responden.getSuhu();
+        int usiaRes = responden.getUsia();
+        // inisialisasi kondisi
+        String statuss= "";
+        String panasTubuh;
+        // Spesifikasi Suhu Tubuh
+        if(suhu >= 37){
+            panasTubuh = "Panas";
+        }else{
+            panasTubuh = "Normal";
+        }
+        // Spesifikasi Usia
+        if(usiaRes < 11){
+            statuss = "Anak-Anak";
+        }else if (usiaRes >= 11 && usiaRes <= 18) {
+            statuss = "Remaja";
+        }else if (usiaRes > 18) {
+            statuss = "Dewasa";
+        }else{
+            System.out.println("Makhluk tidak tedifinisi");
+        }
+        System.out.println("Terimakasih Karna Sudah Mengisi Kuisioner");
+        System.out.println("Berdasarkan jawaban yang kami terima ");
+        System.out.print("Bahwa ");
         
-            if (pilek && batuk) {
-                // Rekomendasi obat untuk pilek dan batuk
-                System.out.println("Rekomendasi: Anda mungkin memerlukan obat untuk pilek dan batuk. Segera berkonsultasi dengan dokter.");
-            } else if (pilek) {
-                // Rekomendasi obat untuk pilek
-                System.out.println("Rekomendasi: Anda mungkin memerlukan obat untuk pilek. Pastikan istirahat yang cukup dan minum air putih.");
-            } else if (batuk) {
-                // Rekomendasi obat untuk batuk
-                System.out.println("Rekomendasi: Anda mungkin memerlukan obat untuk batuk. Pastikan istirahat yang cukup dan minum air hangat.");
-            } else {
-                // Rekomendasi jika tidak ada gejala yang cocok
-                System.out.println("Tidak ada rekomendasi obat berdasarkan jawaban Anda.");
+        for (Map.Entry<String, String> entry : answer.entrySet()) {
+            String nomerSoal = entry.getKey();
+            String jawabanRes = entry.getValue();
+            
+            if(panasTubuh.equals("Panas") || (nomerSoal.equals("02")&&nomerSoal.equals("07")&&nomerSoal.equals("08"))){
+                    System.out.print(" Anda Terkena Demam");
+                    System.out.println(" ");
+                    System.out.println("Tips Meredakan Demam\n"
+                                    +"1. Perbanyak Minum\n"
+                                    +"2. Istirahat Yang Cukup\n"
+                                    +"3. Kompres Air Dingin\n"
+                                    +"4. Mandi Dengan Air Hangat\n"
+                                    +"5. Meminum Obat Penurun Panas");
+                    System.out.println(" ");
+                    System.out.println("Berikut Merupakan Rekomendasi Obat Dari Kami : ");
+                    if(statuss.equals("Dewasa")|| statuss.equals("Remaja")){
+                        System.out.println("1. Paracetamol 500mg 3x/hari");
+                    }
+                    
+
+                } else {
+                 System.out.println("Anda hanya perlu beristirahat");   
+                }
+
+            if(panasTubuh.equals("Panas") || (nomerSoal.equals("06")&&nomerSoal.equals("02")&&nomerSoal.equals("01")&&nomerSoal.equals("08"))) {
+                    System.out.print("Anda terkena penyakit maag");
+                    System.out.println(" ");
+                    System.out.println("Tips Meredakan Gejala Maag\n"
+                                    + "1. Makan dalam porsi kecil dan lebih sering\n"
+                                    + "2. Kunyah makanan dengan perlahan\n" 
+                                    + "3. Batasi konsumsi makanan pedas, asam, dan berlemak\n"
+                                    + "4. " );
+                }
+                
+                
             }
+            
+            
+            // jika suhu > 35 = demam / else aman
+    
+            // jika usia < 11 thn = anak-anak
+            //jika usia >= 11 && <= 18 = remaja
+            // jika usia < 18 = dewasa
+    
+            // Pria: Berat badan ideal (kilogram) = {tinggi badan (cm) - 100} - {[tinggi badan (cm) - 100] x 10%}
+            // Wanita: Berat badan ideal (kilogram) = {tinggi badan (cm) - 100} - {[tinggi badan (cm) - 100] x 15%}
         
         
     }
@@ -252,6 +307,8 @@ public class ControlPanel {
     public void beliObat() {
         BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
         ArrayList<DetailBeli> tDetailBelis = new ArrayList<>();
+        Pembeli user = new Pembeli();
+
         String namaUsers = user.getNama();
         String emailUsers = user.getEmail();
         int temp = 0;
@@ -292,7 +349,8 @@ public class ControlPanel {
             if (konfirm.equalsIgnoreCase("y")) {
                 DetailBeli detailBeli = new DetailBeli();
                 detailBeli.setDetailBelis(tDetailBelis)
-                        .setIdBeliDetailBeli("P" + tDetailBelis.size() + 1)
+                        .setIdDetailBeli("P" )
+                        .setIdDetailBeli(tDetailBelis.size() + 1)
                         .setNama(getNama(user.getNama))
                         .setTanggal(LocalDate.now())
                         .setTotal(hitungTotalBelanja(tDetailBelis));
@@ -302,6 +360,10 @@ public class ControlPanel {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    private int totalPembelian(ArrayList<DetailBeli> tDetailBelis) {
+        return 0;
     }
 
     public void tampilkanDaftarPembelianObat(ArrayList<DetailBeli> db){
