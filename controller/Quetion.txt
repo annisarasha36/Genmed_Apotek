@@ -1,0 +1,54 @@
+nama
+usia
+berat badan
+suhu
+penyakit yang dialami (kuisioner)
+- DEMAM 
+- FLUBATUK
+- MAAG
+apa yang dirasakan (kuisioner)
+1 merasa mual
+2 pusing 
+3 tenggorokan gatal
+4 hidung tersumbat
+5 batuk
+6 sakit perut
+7 muntah-muntah
+8 lemas 
+ciri-ciri penyakit (kuisioner)
+- DEMAM
+2,7,8,
+-FLUBATUK
+2,3,4,5,
+-MAAG
+6,2,1,8
+Nama-nama obat
+1. paracetamol 6.000/strip (8.000/btl) = meredakan demam dan nyeri tubuh
+2. amoxilin 4.000/strip (7.000/btl) = antibiotik
+3. flutamol 5.000/strip (7.000/btl) = meringankan gejala flu
+4. antasid 6000/strip (13.500/btl) = meredakan gejala dari refluks asam lambung dan tukak lambung
+5. dextimpluss 3.000/strip = mengobati alergi dan inflamasi
+6. vitamin 4.000/strip (12.000/btl) = membantu tubuh bekerja secara efektif (?)
+7. OBH 10.000/btl = meredakan batuk berdahak
+8. Ranitidine 6.000/strip = mengobati gejala yang berkaitan dengan produksi asam lambung berlebih
+
+Obat yang di perlukan 
+- DEMAM
+    dewasa
+paracetamol,amoxilin,vitamin
+    anak
+paracetamol sirup, amoxilin srp, vitamin
+- FLUBATUK
+    dewasa
+flutamol,amoxilin,vitamin 
+    anak
+flutamol srp, vitamin
+- MAAG
+    dewasa
+antasid,Ranitidine,amoxilin,vitamin
+    anak
+antasid srp, amoxilin srp, vitamin
+
+public void setPembelian() {
+    
+}
