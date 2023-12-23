@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 public class Pembelian {
     private String idPembelian;
+    private String namaS;
     private Pembeli pembeli;
     private int total;
     private LocalDate tanggal;
@@ -56,4 +57,19 @@ public class Pembelian {
     public ArrayList<DetailBeli> getDetailBelis() {
         return this.detailBelis;
     }
+
+    /**
+     * @return String return the namaS
+     */
+    public String getNamaS() {
+        return namaS;
+    }
+
+    /**
+     * @param namaS the namaS to set
+     */
+    public void setNamaS(String namaS) {
+        this.namaS = namaS;
+    }
+
 }
