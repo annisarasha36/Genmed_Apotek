@@ -120,7 +120,7 @@ public class ControlPanel {
     }
 
     // login akun
-    public static void setUser() throws IOException {
+    public void setUser() throws IOException {
         BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
         String masuk = "";
         Pembeli user = new Pembeli();
